@@ -33,12 +33,19 @@ $("#addAnimal").on("click", function() {
     renderButtons();
 });
 
+// Click event for animal buttons
+$(".animalButtons").on("click", function() {
+    var clickedAnimal = $(this).attr("data-name");
+    // Display gifs
+    displayGifs(clickedAnimal);
+});
+
 // Display the images
-function displayGifs() {
+function displayGifs(clickedAnimal) {
 // Get the images from Giphy
   // Create the queryURL
   var APIKey = "&api_key=" + "aPXKMDgpfICV4wcHOcnFcWS0Tqgr0w8C";
-  var animal = "search?q=" + $(this).attr("data-name");
+  var animal = "search?q=" + clickedAnimal;
   var APICall = "https://api.giphy.com/v1/gifs/"
   var limit = "&limit=" + "10";
 
@@ -48,18 +55,49 @@ function displayGifs() {
   $.ajax({
     url: queryURL,
     method: "GET"
-  }).then(function() {
+  }).then(function(response) {
+    console.log(response);
+
 
   });
 }
 
+  <img src="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-still="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-animate="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200.gif" data-state="still" class="gif">
 
+// Gif click event
+function $(".gif").on("click", function() {
+        // STEP ONE: study the html above.
+        // Look at all the data attributes.
+        // Run the file in the browser. Look at the images.
 
-            // displayMovieInfo function re-renders the HTML to display the appropriate content
-            function displayMovieInfo() {
-      
-              var movie = $(this).attr("data-name");
-              var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
+        // After we complete steps 1 and 2 we'll be able to pause gifs from giphy.
+
+        // STEP TWO: make a variable named state and then store the image's data-state into it.
+        // Use the .attr() method for this.
+
+       var state = $(this).attr('data-state');
+
+        // CODE GOES HERE
+
+        // =============================================
+
+        // STEP THREE: Check if the variable state is equal to 'still',
+        // then update the src attribute of this image to it's data-animate value,
+        // and update the data-state attribute to 'animate'.
+
+        // If state is equal to 'animate', then update the src attribute of this
+        // image to it's data-still value and update the data-state attribute to 'still'
+        // ============== FILL IN CODE HERE FOR STEP THREE =========================
+
+        if (state === "still") {
+          $(this).attr("src", $(this).attr("data-animate"));
+          // var animatedSrc = $(this).attr("data-animate");
+          $(this).attr('data-state',"animated");
+        } else {
+          $(this).attr("src", $(this).attr("data-still"));
+          $(this).attr('data-state',"still");
+        }
+
       
               // Creating an AJAX call for the specific movie button being clicked
               $.ajax({
@@ -114,24 +152,6 @@ function displayGifs() {
       
             }
       
-    
-            // This function handles events where a movie button is clicked
-            $("#add-movie").on("click", function(event) {
-              event.preventDefault();
-              // This line grabs the input from the textbox
-              var movie = $("#movie-input").val().trim();
-      
-              // Adding movie from the textbox to our array
-              movies.push(movie);
-      
-              // Calling renderButtons which handles the processing of our movie array
-              renderButtons();
-            });
-      
-            // Adding a click event listener to all elements with a class of "movie"
-            $(document).on("click", ".movie", displayMovieInfo);
-      
-            // Calling the renderButtons function to display the intial buttons
-            renderButtons();
+
           
 
