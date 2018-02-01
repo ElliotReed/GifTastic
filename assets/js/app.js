@@ -7,7 +7,6 @@ function renderButtons() {
   $('#animalButtons').empty();
   // Loop through the array and generate buttons 
   for (i = 0; i < animals.length; i++) {
-    console.log(animals[i]);
     var newButton = $("<button>");
     newButton.addClass("animalButtons");
     newButton.attr("data-name", animals[i]);
@@ -36,6 +35,7 @@ $("#addAnimal").on("click", function() {
 // Click event for animal buttons
 $(".animalButtons").on("click", function() {
     var clickedAnimal = $(this).attr("data-name");
+    $("#animals").empty();
     // Display gifs
     displayGifs(clickedAnimal);
 });
@@ -56,39 +56,34 @@ function displayGifs(clickedAnimal) {
     url: queryURL,
     method: "GET"
   }).then(function(response) {
-    console.log(response);
 
+    // Create a variable to hold the information
+    var results = response.data;
+    // Add all to the html
+
+    for (var i = 0; i < results.length; i++) {
+      console.log(results[i]);
+      var animalDiv = $("<div>");
+      animalDiv.addClass("imageContainer");
+      var ratingP = $("<p>");
+      ratingP.text("Rating: " + results[i].rating);
+      // var image = $("<img src=" + results[i].images.fixed_height_still.url + "/>");
+      var animalImage = $("<img>");
+
+      // Set the image's src to results[i]'s fixed_height.url.
+      animalImage.attr("src", results[i].images.fixed_height_still.url);
+      animalImage.attr("data-still", results[i].images.fixed_height_still.url);
+      animalImage.attr("data-animated", results[i].images.fixed_height.url);     
+      $("#animals").append(animalDiv, ratingP, animalImage);  
+    };
 
   });
 }
 
-  <img src="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-still="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200_s.gif" data-animate="https://media1.giphy.com/media/3o85xkQpyMlnBkpB9C/200.gif" data-state="still" class="gif">
-
 // Gif click event
-function $(".gif").on("click", function() {
-        // STEP ONE: study the html above.
-        // Look at all the data attributes.
-        // Run the file in the browser. Look at the images.
-
-        // After we complete steps 1 and 2 we'll be able to pause gifs from giphy.
-
-        // STEP TWO: make a variable named state and then store the image's data-state into it.
-        // Use the .attr() method for this.
-
+$(document.body.section).on("click", "img", function() {
        var state = $(this).attr('data-state');
-
-        // CODE GOES HERE
-
-        // =============================================
-
-        // STEP THREE: Check if the variable state is equal to 'still',
-        // then update the src attribute of this image to it's data-animate value,
-        // and update the data-state attribute to 'animate'.
-
-        // If state is equal to 'animate', then update the src attribute of this
-        // image to it's data-still value and update the data-state attribute to 'still'
-        // ============== FILL IN CODE HERE FOR STEP THREE =========================
-
+console.log(this);
         if (state === "still") {
           $(this).attr("src", $(this).attr("data-animate"));
           // var animatedSrc = $(this).attr("data-animate");
@@ -97,61 +92,8 @@ function $(".gif").on("click", function() {
           $(this).attr("src", $(this).attr("data-still"));
           $(this).attr('data-state',"still");
         }
-
+});
       
-              // Creating an AJAX call for the specific movie button being clicked
-              $.ajax({
-                url: queryURL,
-                method: "GET"
-              }).done(function(response) {
-      
-      
-                $('#test').html('hello')
-                // Creating a div to hold the movie
-                var movieDiv = $("<div class='movie'>");
-      
-                // Storing the rating data
-                var rating = response.Rated;
-      
-                // Creating an element to have the rating displayed
-                var pOne = $("<p>").text("Rating: " + rating);
-      
-                // Displaying the rating
-                movieDiv.append(pOne);
-      
-                // Storing the release year
-                var released = response.Released;
-      
-                // Creating an element to hold the release year
-                var pTwo = $("<p>").text("Released: " + released);
-      
-                // Displaying the release year
-                movieDiv.append(pTwo);
-      
-                // Storing the plot
-                var plot = response.Plot;
-      
-                // Creating an element to hold the plot
-                var pThree = $("<p>").text("Plot: " + plot);
-      
-                // Appending the plot
-                movieDiv.append(pThree);
-      
-                // Retrieving the URL for the image
-                var imgURL = response.Poster;
-      
-                // Creating an element to hold the image
-                var image = $("<img>").attr("src", imgURL);
-      
-                // Appending the image
-                movieDiv.append(image);
-      
-                // Putting the entire movie above the previous movies
-                $("#movies-view").prepend(movieDiv);
-              });
-      
-            }
-      
-
+         
           
 
