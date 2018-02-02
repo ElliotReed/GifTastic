@@ -1,7 +1,15 @@
+html { 
+  background: url(../../assets/img/background.gif) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 body {
     font-family: 'Noto Sans', sans-serif;
     font-size: 100%;
-    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(255, 255, 255); */
   }
   
   body, caption, th, td, input, textarea, select, option, legend, fieldset, h1, h2, h3, h4, h5, h6 {
@@ -132,25 +140,82 @@ p {
     margin: 0 auto;
 }
 
-@media (min-width: 43.75em) {
+@media (max-width: 43.75em) {
     .container {
         width: 95%;
         margin: 0 auto;
     }
 }
 
-.header {
+header {
+    margin: 20px 0;
     text-align: center;
     font-size: 36px;
     color: #E8D6CB;
-    background-color: #5D2E46;
-    padding: 30px;
+    background-color: #D4A36A;
+    padding: 10px;
 }
 
-.footer {
+#page .btn{
+  font-size: 1em;
+  /* equivalent to 16px */
+  line-height: 1.25;
+  /* equivalent to 20px */
+}
+.btn {
+  padding: 0 1em;
+  margin: .5em;
+  height: 1.5em;
+  background-color: #552E00;  
+  color:#FFD8AA;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline:none;
+
+}
+
+#animalForm {
+ background-color: #552E00;
+ color:#FFD8AA;
+ padding: 1em; 
+}
+#animalInput {
+  margin: 0 1em;
+}
+#addAnimal {
+  background-color: #FFD8AA;
+  color:#552E00;
+  border: none;
+  border-radius: 5px;
+  padding: .5em;
+  outline:none;
+  cursor: pointer;
+}
+
+#animals {
+ margin: 1em 0;
+}
+
+.imageContainer {
+  display: inline;
+  float: left;
+  margin: 1em;
+}
+.imageContainer img {
+  border: #552E00 .10em solid;
+  cursor: pointer;
+}
+.imageContainer p {
+  background-color: #552E00;
+  color:#FFD8AA;
+  margin: .5em;
+}
+
+footer {
     text-align: center;
-    background-color: #5D2E46;
-    color: #E8D6CB;
+    background-color: #552E00;
+    color: #FFD8AA;
     padding: 15px;
     position: fixed;
     bottom: 0;
@@ -161,13 +226,13 @@ p {
 .loader {
   border: 10 px solid white;
   z-index: 99;
-  display: block;
+  display: none;
   position: absolute;
   top: 30%;
   left: 30%;
   height: 40%;
   width: 40%;
-  background: url('../../assets/images/loading.gif') no-repeat center;
+  background: url('../../assets/img/loading.gif') no-repeat center;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -192,40 +257,14 @@ p {
     box-shadow:  0 10px 10px rgba(0, 0, 0, 0.5);.
 }
 
-.dismiss {
-    margin-top: 80px;
-}
-
-.winLossMessage,
 .message {
     position: relative;
     top:30%;
     transform: perspective(1px) translateY(-50%);
 }
 
-.dismiss {
-    background-color: #AD6A6C;
-    color: #E8D6CB;
-    font-weight: 500;
-    font-size: 20px;
-    border: 2px solid #5D2E46;
-    padding: 15px;
-
 }
 
-}
-.btn {
-    padding: 0;
-    margin: 0;
-    height:200px;
-    width: 200px;
-    background-color: transparent;  
-    border: none;
-    cursor:pointer;
-    overflow: hidden;
-    outline:none;
-    background-size: 100%;
-}
 
 .btn:active {
     background: none;

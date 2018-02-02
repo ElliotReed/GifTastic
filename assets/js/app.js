@@ -1,6 +1,6 @@
 
 // Initial array of animals
-var animals = ["Bird", "cat", "Mr. Nobody", "The Lion King"];
+var animals = [];
 
 // Function for displaying movie data
 function renderButtons() {
@@ -8,7 +8,7 @@ function renderButtons() {
   // Loop through the array and generate buttons 
   for (i = 0; i < animals.length; i++) {
     var newButton = $("<button>");
-    newButton.addClass("animalButtons");
+    newButton.addClass("animalButtons btn");
     newButton.attr("data-name", animals[i]);
     newButton.text(animals[i]);
     $("#animalButtons").append(newButton);
@@ -27,13 +27,14 @@ $("#addAnimal").on("click", function() {
     $("#animalInput").val("");
     // Add to the array
     animals.push(newAnimal);
-
+    console.log(animals);
+    $("#animalInput").text("");
     // Render buttons
     renderButtons();
 });
 
 // Click event for animal buttons
-$(".animalButtons").on("click", function() {
+$(document.body).on("click", ".animalButtons", function() {
     var clickedAnimal = $(this).attr("data-name");
     $("#animals").empty();
     // Display gifs
@@ -50,13 +51,13 @@ function displayGifs(clickedAnimal) {
   var limit = "&limit=" + "10";
 
   var queryURL = APICall + animal + limit + APIKey;
-
+  $(".loader").show();
   // Make the ajax call
   $.ajax({
     url: queryURL,
     method: "GET"
   }).then(function(response) {
-
+    $(".loader").hide();
     // Create a variable to hold the information
     var results = response.data;
     // Add all to the html
@@ -69,23 +70,26 @@ function displayGifs(clickedAnimal) {
       ratingP.text("Rating: " + results[i].rating);
       // var image = $("<img src=" + results[i].images.fixed_height_still.url + "/>");
       var animalImage = $("<img>");
+      animalImage.addClass("clickable");
 
       // Set the image's src to results[i]'s fixed_height.url.
       animalImage.attr("src", results[i].images.fixed_height_still.url);
       animalImage.attr("data-still", results[i].images.fixed_height_still.url);
-      animalImage.attr("data-animated", results[i].images.fixed_height.url);     
-      $("#animals").append(animalDiv, ratingP, animalImage);  
+      animalImage.attr("data-animated", results[i].images.fixed_height.url);   
+      animalImage.attr('data-state', "still");  
+      $(animalDiv).append(animalImage, ratingP); 
+      $("#animals").append(animalDiv);  
     };
 
   });
 }
 
 // Gif click event
-$(document.body.section).on("click", "img", function() {
+$(document.body).on("click", ".clickable", function() {
        var state = $(this).attr('data-state');
-console.log(this);
+
         if (state === "still") {
-          $(this).attr("src", $(this).attr("data-animate"));
+          $(this).attr("src", $(this).attr("data-animated"));
           // var animatedSrc = $(this).attr("data-animate");
           $(this).attr('data-state',"animated");
         } else {
